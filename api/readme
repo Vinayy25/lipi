@@ -1,0 +1,10 @@
+$ sudo dnf install redis # Install redis cli and server
+$ sudo systemctl start redis # Initialize redis server
+
+To start redis on boot, run
+
+$ sudo systemctl enable redis
+
+The config file for Redis is located at /etc/redis/redis.conf.
+
+$ sudo nano /etc/redis/redis.conf

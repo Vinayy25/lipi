@@ -1,0 +1,36 @@
+name: lipi
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  firebase_auth: ^4.17.5
+  firebase_core: ^2.25.4
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.1.0
+  lottie: ^3.1.0
+  permission_handler: ^11.3.0
+  provider: ^6.1.1
+  record: ^5.0.4
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/icons/
+    - assets/animations/

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "522636415020",
+    "project_id": "lipi-app",
+    "storage_bucket": "lipi-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522636415020:android:b465580c1d16689fd00189",
+        "android_client_info": {
+          "package_name": "com.example.lipi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtDt5DZ7giQEJwrQTFHF-hHOly-foK1Gc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
