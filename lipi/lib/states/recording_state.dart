@@ -1,73 +1,72 @@
-import 'dart:math';
-import 'dart:typed_data';
-
+import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:flutter_sound/flutter_sound.dart';
-
 class RecordingProvider extends ChangeNotifier {
   bool isRecording = false;
 
-  final recorder = FlutterSoundRecorder();
+  PlayerController playerController = PlayerController();
 
+  RecorderController recorderController = RecorderController()
+    ..androidEncoder = AndroidEncoder.aac
+    ..androidOutputFormat = AndroidOutputFormat.mpeg4
+    ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
+    ..sampleRate = 16000;
   bool isFileAvailable = false;
+  String? myfilePath;
 
-
-
-  bool checkFile(){
-    if(_filePath!=null){
+  bool checkFile() {
+    if (myfilePath != null) {
       isFileAvailable = true;
     }
+    notifyListeners();
+
     return false;
   }
 
-  final player = FlutterSoundPlayer();
-
-  playSound()async{
-    await player.openPlayer();
-   await  player.startPlayer(fromURI: _filePath);
-
-  
-
-
-  
-
+  playSound() async {
+    await playerController.startPlayer();
+    notifyListeners();
   }
 
-  Stream<Uint8List>? stream;
   void setIsRecording(bool value) {
     isRecording = value;
     notifyListeners();
   }
 
-  Duration duration = const Duration();
-
-  String? _filePath;
-
   bool get getIsRecording => isRecording;
 
   void startRecording() async {
     setIsRecording(true);
+    //clean the path
+    recorderController.refresh();
+    recorderController.reset();
 
-    await recorder.openRecorder();
-    recorder.setSubscriptionDuration(const Duration(milliseconds: 500));
+    notifyListeners();
 
-    await recorder.startRecorder(
-        toFile: _filePath,
-        // codec: Codec.aacADTS,
+    await recorderController.record(path: myfilePath);
 
-        codec: Codec.aacMP4);
-    print("\n\n\nthis is the file path$_filePath\n\n\n");
+    print("\n\n\nthis is the file path$myfilePath\n\n\n");
     notifyListeners();
   }
 
   void stopRecording() async {
     setIsRecording(false);
-    String? respose = await recorder.stopRecorder();
-    print(respose.toString());
-    await recorder.closeRecorder();
+
+    myfilePath = await recorderController.stop();
+
+    print("this is my file path here: $myfilePath");
+    await playerController.preparePlayer(
+      path: myfilePath!,
+    );
+
+    await audioPlayer.setSourceDeviceFile(myfilePath!);
+
+    playSound();
+    playerController.stopAllPlayers();
+
     notifyListeners();
   }
 
@@ -75,7 +74,7 @@ class RecordingProvider extends ChangeNotifier {
     if (await Permission.microphone.isGranted == true) {
       final appDir = await getApplicationDocumentsDirectory();
       print("resonse is : " + appDir.path);
-      _filePath = '${appDir.path}/current_recording.m4a';
+      myfilePath = '${appDir.path}/current_recording.m4a';
       print('app directory is $appDir');
 
       print('Permission Granted');

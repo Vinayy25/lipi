@@ -7,6 +7,7 @@ import 'package:lipi/screens/home_screen.dart';
 import 'package:lipi/screens/intro.dart';
 import 'package:lipi/states/recording_state.dart';
 import 'package:lipi/themes/app_theme.dart';
+import 'package:lipi/themes/dark_theme.dart';
 import 'package:lipi/themes/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,6 @@ class LandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dashboard();
+    return HomeScreen();
   }
 }
