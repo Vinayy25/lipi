@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lipi/services/firebase_servive.dart';
 import 'package:lipi/themes/theme_model.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +11,9 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
+final TextEditingController emailController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -28,9 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           actions: [
             IconButton(
-              
                 icon: Icon(
-                  
                     themeNotifier.isDark
                         ? Icons.nightlight_round
                         : Icons.wb_sunny,
@@ -74,10 +78,11 @@ class _LoginPageState extends State<LoginPage> {
                           color: Theme.of(context).primaryColorLight,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(20))),
-                      child: const TextField(
+                      child: TextField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Email or Phone number"),
+                            border: InputBorder.none, hintText: "Email"),
                       ),
                     ),
                     const SizedBox(
@@ -90,7 +95,9 @@ class _LoginPageState extends State<LoginPage> {
                           color: Theme.of(context).primaryColorLight,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(20))),
-                      child: const TextField(
+                      child: TextField(
+                        controller: passwordController,
+                        keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         decoration: InputDecoration(
                             border: InputBorder.none, hintText: "Password"),
@@ -99,16 +106,29 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image(
-                            width: 30,
-                            image: AssetImage('assets/icons/google.png')),
+                        
+                        GestureDetector(
+
+                          
+                          onTap: () async {
+                            FirebaseService().signInWithGoogle();
+                          },
+                          child: Image(
+                              width: 30,
+                              image: AssetImage('assets/icons/google.png')),
+                        ),
                         SizedBox(width: 40),
-                        Image(
-                            width: 30,
-                            image: AssetImage('assets/icons/facebook.png')),
+                        GestureDetector(
+                          onTap: () async {
+                            await FirebaseService().signOut();
+                          },
+                          child: Image(
+                              width: 30,
+                              image: AssetImage('assets/icons/facebook.png')),
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -125,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                 Column(
                   children: [
                     MaterialButton(
-                      onPressed: () => {},
+                      onPressed: () async => await FirebaseService().signIn(
+                          emailController.text, passwordController.text),
                       elevation: 0,
                       padding: const EdgeInsets.all(18),
                       shape: RoundedRectangleBorder(

@@ -66,6 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '522636415020',
     projectId: 'lipi-app',
     storageBucket: 'lipi-app.appspot.com',
+    androidClientId: '522636415020-u78s6ap6n43r7h0qal42aqkcakrhu8n7.apps.googleusercontent.com',
+    iosClientId: '522636415020-394p0evsu8padv6jq9u8r7euan0g6bf0.apps.googleusercontent.com',
     iosBundleId: 'com.example.lipi',
   );
 
@@ -75,6 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '522636415020',
     projectId: 'lipi-app',
     storageBucket: 'lipi-app.appspot.com',
+    androidClientId: '522636415020-u78s6ap6n43r7h0qal42aqkcakrhu8n7.apps.googleusercontent.com',
+    iosClientId: '522636415020-056tu00i9db5l6adbdinupd0fonvv71s.apps.googleusercontent.com',
     iosBundleId: 'com.example.lipi.RunnerTests',
   );
 }
